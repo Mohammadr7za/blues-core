@@ -6,9 +6,8 @@ import vuetify from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   app: {
     head: {
-      titleTemplate: '%s - NuxtJS Admin Template',
-      title: 'Vuexy',
-
+      titleTemplate: '%s - خاص',
+      title: 'پیشخوان خدمات الکترونیک صبا فولاد خلیج فارس',
       link: [{
         rel: 'icon',
         type: 'image/x-icon',

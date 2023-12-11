@@ -1,5 +1,5 @@
 export const getPublicUrl = (path: string) => {
   const prefix = path.startsWith('/') ? '' : '/'
 
-  return `http://localhost:3000${prefix}${path}`
+  return `${process.env.NUXT_PUBLIC_API_BASE_URL}${prefix}${path}`
 }

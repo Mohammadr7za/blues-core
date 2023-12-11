@@ -10,14 +10,14 @@ import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layo
 
 export const { themeConfig, layoutConfig } = defineThemeConfig({
   app: {
-    title: 'vuexy',
+    title: process.env.WEBSITE_TITLE,
     logo: h('div', { innerHTML: logo, style: 'line-height:0; color: rgb(var(--v-global-theme-primary))' }),
     contentWidth: ContentWidth.Boxed,
     contentLayoutNav: AppContentLayoutNav.Vertical,
     overlayNavFromBreakpoint: breakpointsVuetify.md + 16, // 16 for scrollbar. Docs: https://next.vuetifyjs.com/en/features/display-and-platform/
     i18n: {
       enable: true,
-      defaultLocale: 'en',
+      defaultLocale: 'fa',
       langConfig: [
         {
           label: 'English',
@@ -25,15 +25,20 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
           isRTL: false,
         },
         {
-          label: 'French',
-          i18nLang: 'fr',
-          isRTL: false,
-        },
-        {
-          label: 'Arabic',
-          i18nLang: 'ar',
+          label: 'فارسی',
+          i18nLang: 'fa',
           isRTL: true,
         },
+        // {
+        //   label: 'French',
+        //   i18nLang: 'fr',
+        //   isRTL: false,
+        // },
+        // {
+        //   label: 'Arabic',
+        //   i18nLang: 'ar',
+        //   isRTL: true,
+        // },
       ],
     },
     theme: 'system',
