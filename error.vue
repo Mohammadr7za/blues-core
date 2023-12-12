@@ -1,19 +1,23 @@
-<script setup lang="ts">
-import type { NuxtError } from 'nuxt/app'
+<script setup>
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
 import misc404 from '@images/pages/404.png'
 import miscMaskDark from '@images/pages/misc-mask-dark.png'
 import miscMaskLight from '@images/pages/misc-mask-light.png'
 
+const props = defineProps({
+  error: {
+    type: Object,
+    required: true,
+  },
+})
+
+
+const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark)
+
+
 defineOptions({
   inheritAttrs: false,
 })
-
-const props = defineProps<{
-  error: NuxtError
-}>()
-
-const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark)
 
 const isDev = process.dev
 
@@ -51,7 +55,7 @@ const handleError = () => clearError({ redirect: '/' })
         :title="errToShow.title"
         :description="errToShow.description"
       />
-
+          
       <div
         v-if="isDev"
         style="max-inline-size: 80dvw; overflow-x: scroll;"

@@ -1,13 +1,14 @@
-import { fileURLToPath } from 'node:url'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import vuetify from 'vite-plugin-vuetify'
+import { fileURLToPath } from 'node:url'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
     head: {
-      titleTemplate: '%s - خاص',
-      title: 'پیشخوان خدمات الکترونیک صبا فولاد خلیج فارس',
+      titleTemplate: '%s - NuxtJS Admin Template',
+      title: 'Vuexy',
+
       link: [{
         rel: 'icon',
         type: 'image/x-icon',
@@ -26,26 +27,9 @@ export default defineNuxtConfig({
     '@/plugins/iconify/icons.css',
   ],
 
-  /*
-    ❗ Please read the docs before updating runtimeConfig
-    https://nuxt.com/docs/guide/going-further/runtime-config
-  */
-  runtimeConfig: {
-    // Private keys are only available on the server
-    AUTH_ORIGIN: process.env.AUTH_ORIGIN,
-    AUTH_SECRET: process.env.AUTH_SECRET,
-
-    // Public keys that are exposed to the client.
-    public: {
-      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || '/api',
-    },
-  },
   components: {
     dirs: [{
       path: '@/@core/components',
-      pathPrefix: false,
-    }, {
-      path: '@/views/demos',
       pathPrefix: false,
     }, {
       path: '~/components/global',
@@ -56,24 +40,11 @@ export default defineNuxtConfig({
     }],
   },
 
-  auth: {
-    globalAppMiddleware: false,
-    secret: process.env.AUTH_SECRET,
-    provider: {
-      type: 'authjs',
-    },
-  },
-
-  plugins: [
-    '@/plugins/casl/index.ts',
-    '@/plugins/vuetify/index.ts',
-    '@/plugins/i18n/index.ts',
-    '@/plugins/iconify/index.ts',
-  ],
+  plugins: ['@/plugins/vuetify/index.js', '@/plugins/iconify/index.js'],
 
   imports: {
     dirs: ['./@core/utils', './@core/composable/', './plugins/*/composables/*'],
-    presets: ['vue-i18n'],
+    presets: [],
   },
 
   hooks: {},
@@ -88,7 +59,7 @@ export default defineNuxtConfig({
       compilerOptions: {
         paths: {
           '@/*': ['../*'],
-          '@themeConfig': ['../themeConfig.ts'],
+          '@themeConfig': ['../themeConfig.js'],
           '@layouts/*': ['../@layouts/*'],
           '@layouts': ['../@layouts'],
           '@core/*': ['../@core/*'],
@@ -121,7 +92,7 @@ export default defineNuxtConfig({
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('.', import.meta.url)),
-        '@themeConfig': fileURLToPath(new URL('./themeConfig.ts', import.meta.url)),
+        '@themeConfig': fileURLToPath(new URL('./themeConfig.js', import.meta.url)),
         '@core': fileURLToPath(new URL('./@core', import.meta.url)),
         '@layouts': fileURLToPath(new URL('./@layouts', import.meta.url)),
         '@images': fileURLToPath(new URL('./assets/images/', import.meta.url)),
@@ -150,14 +121,7 @@ export default defineNuxtConfig({
           configFile: 'assets/styles/variables/_vuetify.scss',
         },
       }),
-      VueI18nPlugin({
-        runtimeOnly: true,
-        compositionOnly: true,
-        ssr: true,
-        include: [
-          fileURLToPath(new URL('./plugins/i18n/locales/**', import.meta.url)),
-        ],
-      }),
+      null,
     ],
   },
 
@@ -165,8 +129,5 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
 
-  server: {
-    port: 8080
-  },
-  modules: ['@vueuse/nuxt', '@nuxtjs/device', '@sidebase/nuxt-auth', '@pinia/nuxt'],
-});
+  modules: ['@vueuse/nuxt', '@nuxtjs/device', '@pinia/nuxt'],
+})

@@ -1,67 +1,22 @@
-<script setup lang="ts">
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-
-const router = useRouter()
-const ability = useAbility()
-
-// TODO: Get type from backend
-const userData = useCookie<any>('userData')
-
-const { signOut } = useAuth()
-
-async function logout() {
-  try {
-    await signOut({ redirect: false })
-
-    // Remove "userData" from cookie
-    userData.value = null
-
-    // Reset user abilities
-    ability.update([])
-
-    navigateTo({ name: 'login' })
-  }
-  catch (error) {
-    throw createError(error)
-  }
-}
-
-const userProfileList = [
-  { type: 'divider' },
-  { type: 'navItem', icon: 'tabler-user', title: 'Profile', to: { name: 'apps-user-view-id', params: { id: 21 } } },
-  { type: 'navItem', icon: 'tabler-settings', title: 'Settings', to: { name: 'pages-account-settings-tab', params: { tab: 'account' } } },
-  { type: 'navItem', icon: 'tabler-credit-card', title: 'Billing', to: { name: 'pages-account-settings-tab', params: { tab: 'billing-plans' } }, badgeProps: { color: 'error', content: '3' } },
-  { type: 'divider' },
-  { type: 'navItem', icon: 'tabler-currency-dollar', title: 'Pricing', to: { name: 'pages-pricing' } },
-  { type: 'navItem', icon: 'tabler-help-circle', title: 'FAQ', to: { name: 'pages-faq' } },
-  { type: 'divider' },
-  { type: 'navItem', icon: 'tabler-logout', title: 'Logout', onClick: logout },
-]
+<script setup>
+import avatar1 from '@images/avatars/avatar-1.png'
 </script>
 
 <template>
   <VBadge
-    v-if="userData"
     dot
-    bordered
     location="bottom right"
     offset-x="3"
     offset-y="3"
+    bordered
     color="success"
   >
     <VAvatar
       class="cursor-pointer"
-      :color="!(userData && userData.avatar) ? 'primary' : undefined"
-      :variant="!(userData && userData.avatar) ? 'tonal' : undefined"
+      color="primary"
+      variant="tonal"
     >
-      <VImg
-        v-if="userData && userData.avatar"
-        :src="userData.avatar"
-      />
-      <VIcon
-        v-else
-        icon="tabler-user"
-      />
+      <VImg :src="avatar1" />
 
       <!-- SECTION Menu -->
       <VMenu
@@ -71,6 +26,7 @@ const userProfileList = [
         offset="14px"
       >
         <VList>
+          <!-- 👉 User Avatar & Name -->
           <VListItem>
             <template #prepend>
               <VListItemAction start>
@@ -80,65 +36,92 @@ const userProfileList = [
                   offset-x="3"
                   offset-y="3"
                   color="success"
-                  bordered
                 >
                   <VAvatar
-                    :color="!(userData && userData.avatar) ? 'primary' : undefined"
-                    :variant="!(userData && userData.avatar) ? 'tonal' : undefined"
+                    color="primary"
+                    variant="tonal"
                   >
-                    <VImg
-                      v-if="userData && userData.avatar"
-                      :src="userData.avatar"
-                    />
-                    <VIcon
-                      v-else
-                      icon="tabler-user"
-                    />
+                    <VImg :src="avatar1" />
                   </VAvatar>
                 </VBadge>
               </VListItemAction>
             </template>
 
-            <VListItemTitle class="font-weight-medium">
-              {{ userData.fullName || userData.username }}
+            <VListItemTitle class="font-weight-semibold">
+              John Doe
             </VListItemTitle>
-            <VListItemSubtitle>{{ userData.role }}</VListItemSubtitle>
+            <VListItemSubtitle>Admin</VListItemSubtitle>
           </VListItem>
 
-          <PerfectScrollbar :options="{ wheelPropagation: false }">
-            <template
-              v-for="item in userProfileList"
-              :key="item.title"
-            >
-              <VListItem
-                v-if="item.type === 'navItem'"
-                :to="item.to"
-                @click="item.onClick && item.onClick()"
-              >
-                <template #prepend>
-                  <VIcon
-                    class="me-2"
-                    :icon="item.icon"
-                    size="22"
-                  />
-                </template>
+          <VDivider class="my-2" />
 
-                <VListItemTitle>{{ item.title }}</VListItemTitle>
-
-                <template
-                  v-if="item.badgeProps"
-                  #append
-                >
-                  <VBadge v-bind="item.badgeProps" />
-                </template>
-              </VListItem>
-
-              <VDivider
-                v-else
-                class="my-2"
+          <!-- 👉 Profile -->
+          <VListItem link>
+            <template #prepend>
+              <VIcon
+                class="me-2"
+                icon="tabler-user"
+                size="22"
               />
             </template>
-          </PerfectScrollbar>
+
+            <VListItemTitle>Profile</VListItemTitle>
+          </VListItem>
+
+          <!-- 👉 Settings -->
+          <VListItem link>
+            <template #prepend>
+              <VIcon
+                class="me-2"
+                icon="tabler-settings"
+                size="22"
+              />
+            </template>
+
+            <VListItemTitle>Settings</VListItemTitle>
+          </VListItem>
+
+          <!-- 👉 Pricing -->
+          <VListItem link>
+            <template #prepend>
+              <VIcon
+                class="me-2"
+                icon="tabler-currency-dollar"
+                size="22"
+              />
+            </template>
+
+            <VListItemTitle>Pricing</VListItemTitle>
+          </VListItem>
+
+          <!-- 👉 FAQ -->
+          <VListItem link>
+            <template #prepend>
+              <VIcon
+                class="me-2"
+                icon="tabler-help"
+                size="22"
+              />
+            </template>
+
+            <VListItemTitle>FAQ</VListItemTitle>
+          </VListItem>
+
+          <!-- Divider -->
+          <VDivider class="my-2" />
+
+          <!-- 👉 Logout -->
+          <VListItem to="/login">
+            <template #prepend>
+              <VIcon
+                class="me-2"
+                icon="tabler-logout"
+                size="22"
+              />
+            </template>
+
+            <VListItemTitle>Logout</VListItemTitle>
+          </VListItem>
         </VList>
       </VMenu>
       <!-- !SECTION -->

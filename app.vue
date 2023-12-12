@@ -1,8 +1,11 @@
-<script setup lang="ts">
+<script setup>
 import { useTheme } from 'vuetify'
 import ScrollToTop from '@core/components/ScrollToTop.vue'
 import initCore from '@core/initCore'
-import { initConfigStore, useConfigStore } from '@core/stores/config'
+import {
+  initConfigStore,
+  useConfigStore,
+} from '@core/stores/config'
 import { hexToRgb } from '@layouts/utils'
 
 const { global } = useTheme()
@@ -25,6 +28,7 @@ if (isMobile)
         <NuxtPage />
         <NuxtLoadingIndicator color="rgb(var(--v-theme-primary))" />
       </NuxtLayout>
+
       <ScrollToTop />
     </VApp>
   </VLocaleProvider>
