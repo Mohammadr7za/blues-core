@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-import authV1BottomShape from '@images/svg/auth-v1-bottom-shape.svg?raw'
-import authV1TopShape from '@images/svg/auth-v1-top-shape.svg?raw'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
-import { themeConfig } from '@themeConfig'
+import {themeConfig} from '@themeConfig'
 import logo from 'assets/images/logo.svg'
+import background from 'assets/images/auth/login-back.jpg'
 
 definePageMeta({
   layout: 'blank',
@@ -17,47 +14,48 @@ const form = ref({
   remember: false,
 })
 
+const isLoading = ref(false);
 const isPasswordVisible = ref(false)
+
+const submitLogin = (data) => {
+  try {
+    console.log("Sad");
+  } catch (e) {
+    console.log(e);
+  } finally {
+    isLoading.value = true;
+  }
+}
 </script>
 
 <template>
-  <div class="auth-wrapper d-flex align-center justify-center pa-4">
+  <div class="auth-wrapper d-flex align-center justify-center pa-4"
+       :style="`background-image: url(${background});background-size: cover;`">
     <div class="position-relative my-sm-16">
-      <!-- 👉 Top shape -->
-      <VNodeRenderer
-        :nodes="h('div', { innerHTML: authV1TopShape })"
-        class="text-primary auth-v1-top-shape d-none d-sm-block"
-      />
-
-      <!-- 👉 Bottom shape -->
-      <VNodeRenderer
-        :nodes="h('div', { innerHTML: authV1BottomShape })"
-        class="text-primary auth-v1-bottom-shape d-none d-sm-block"
-      />
 
       <!-- 👉 Auth Card -->
       <VCard
         class="auth-card pa-4"
-        max-width="500"
+
       >
-        <VCardItem class="justify-center"  style="max-width: 500px; min-width: 350px">
-            <div class="d-flex">
-              <h1>
-                <VImg
-                  :src="logo"
-                  height="100%"
-                  width="100px"
-                />
-              </h1>
-            </div>
+        <VCardItem class="justify-center">
+          <div class="d-flex justify-center">
+            <h1>
+              <VImg
+                :src="logo"
+                height="100%"
+                width="150px"
+              />
+            </h1>
+          </div>
 
           <VCardTitle class="font-weight-bold text-capitalize text-center mt-6">
-            {{ themeConfig.app.title }}
+            {{ themeConfig.app.fullTitle }}
           </VCardTitle>
         </VCardItem>
 
         <VCardText>
-          <VForm @submit.prevent="() => {}">
+          <VForm @submit.prevent="submitLogin">
             <VRow>
               <!-- email -->
               <VCol cols="12">
@@ -86,6 +84,7 @@ const isPasswordVisible = ref(false)
                   block
                   class="mt-2"
                   type="submit"
+                  :loading="isLoading"
                 >
                   ورود
                 </VBtn>
