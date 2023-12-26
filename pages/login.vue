@@ -1,17 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
-import authV2LoginIllustrationBorderedDark from '@images/pages/auth-v2-login-illustration-bordered-dark.png'
-import authV2LoginIllustrationBorderedLight from '@images/pages/auth-v2-login-illustration-bordered-light.png'
-import authV2LoginIllustrationDark from '@images/pages/auth-v2-login-illustration-dark.png'
-import authV2LoginIllustrationLight from '@images/pages/auth-v2-login-illustration-light.png'
-import authV2MaskDark from '@images/pages/misc-mask-dark.png'
-import authV2MaskLight from '@images/pages/misc-mask-light.png'
+import authV1BottomShape from '@images/svg/auth-v1-bottom-shape.svg?raw'
+import authV1TopShape from '@images/svg/auth-v1-top-shape.svg?raw'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
+import logo from 'assets/images/logo.svg'
 
 definePageMeta({
-  layout: 'blank', 
+  layout: 'blank',
+
 })
 
 const form = ref({
@@ -21,68 +18,54 @@ const form = ref({
 })
 
 const isPasswordVisible = ref(false)
-const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
-const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
 </script>
 
 <template>
-  <VRow
-    no-gutters
-    class="auth-wrapper bg-surface"
-  >
-    <VCol
-      md="8"
-      class="d-none d-md-flex"
-    >
-      <div class="position-relative bg-background rounded-lg w-100 ma-8 me-0">
-        <div class="d-flex align-center justify-center w-100 h-100">
-          <VImg
-            max-width="505"
-            :src="authThemeImg"
-            class="auth-illustration mt-16 mb-2"
-          />
-        </div>
+  <div class="auth-wrapper d-flex align-center justify-center pa-4">
+    <div class="position-relative my-sm-16">
+      <!-- 👉 Top shape -->
+      <VNodeRenderer
+        :nodes="h('div', { innerHTML: authV1TopShape })"
+        class="text-primary auth-v1-top-shape d-none d-sm-block"
+      />
 
-        <VImg
-          class="auth-footer-mask"
-          :src="authThemeMask"
-        />
-      </div>
-    </VCol>
+      <!-- 👉 Bottom shape -->
+      <VNodeRenderer
+        :nodes="h('div', { innerHTML: authV1BottomShape })"
+        class="text-primary auth-v1-bottom-shape d-none d-sm-block"
+      />
 
-    <VCol
-      cols="12"
-      md="4"
-      class="auth-card-v2 d-flex align-center justify-center"
-    >
+      <!-- 👉 Auth Card -->
       <VCard
-        flat
-        :max-width="500"
-        class="mt-12 mt-sm-0 pa-4"
+        class="auth-card pa-4"
+        max-width="500"
       >
+        <VCardItem class="justify-center"  style="max-width: 500px; min-width: 350px">
+            <div class="d-flex">
+              <h1>
+                <VImg
+                  :src="logo"
+                  height="100%"
+                  width="100px"
+                />
+              </h1>
+            </div>
+
+          <VCardTitle class="font-weight-bold text-capitalize text-center mt-6">
+            {{ themeConfig.app.title }}
+          </VCardTitle>
+        </VCardItem>
+
         <VCardText>
-          <VNodeRenderer
-            :nodes="themeConfig.app.logo"
-            class="mb-6"
-          />
-          <h4 class="text-h4 mb-1">
-            Welcome to <span class="text-capitalize">{{ themeConfig.app.title }}</span>! 👋🏻
-          </h4>
-          <p class="mb-0">
-            Please sign-in to your account and start the adventure
-          </p>
-        </VCardText>
-        <VCardText>
-          <VForm @submit.prevent="() => { }">
+          <VForm @submit.prevent="() => {}">
             <VRow>
               <!-- email -->
               <VCol cols="12">
                 <AppTextField
                   v-model="form.email"
                   autofocus
-                  label="Email"
-                  type="email"
-                  placeholder="johndoe@email.com"
+                  label="نام کاربری"
+                  type="text"
                 />
               </VCol>
 
@@ -90,73 +73,30 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
               <VCol cols="12">
                 <AppTextField
                   v-model="form.password"
-                  label="Password"
+                  label="کلمه عبور"
                   placeholder="············"
                   :type="isPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                  class="mt-2 mb-10"
                 />
 
-                <div class="d-flex align-center flex-wrap justify-space-between mt-2 mb-4">
-                  <VCheckbox
-                    v-model="form.remember"
-                    label="Remember me"
-                  />
-                  <a
-                    class="text-primary ms-2 mb-1"
-                    href="#"
-                  >
-                    Forgot Password?
-                  </a>
-                </div>
-
+                <!-- login button -->
                 <VBtn
                   block
+                  class="mt-2"
                   type="submit"
                 >
-                  Login
+                  ورود
                 </VBtn>
               </VCol>
 
-              <!-- create account -->
-              <VCol
-                cols="12"
-                class="text-center text-base"
-              >
-                <span>New on our platform?</span>
-
-                <a
-                  class="text-primary ms-2"
-                  href="#"
-                >
-                  Create an account
-                </a>
-              </VCol>
-
-              <VCol
-                cols="12"
-                class="d-flex align-center"
-              >
-                <VDivider />
-
-                <span class="mx-4">or</span>
-
-                <VDivider />
-              </VCol>
-
-              <!-- auth providers -->
-              <VCol
-                cols="12"
-                class="text-center"
-              >
-                <AuthProvider />
-              </VCol>
             </VRow>
           </VForm>
         </VCardText>
       </VCard>
-    </VCol>
-  </VRow>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">

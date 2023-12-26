@@ -71,7 +71,8 @@ export const useLayoutConfigStore = defineStore('layoutConfig', () => {
 
   // 👉 RTL
   // const isAppRTL = ref(layoutConfig.app.isRTL)
-  const isAppRTL = ref(false)
+  const isAppRTL = ref(true)
+  const version = ref(layoutConfig.app.version)
 
   watch(isAppRTL, val => {
     _setDirAttr(val ? 'rtl' : 'ltr')
@@ -105,6 +106,7 @@ export const useLayoutConfigStore = defineStore('layoutConfig', () => {
     footerType,
     isLessThanOverlayNavBreakpoint,
     isAppRTL,
+    version,
     _layoutClasses,
     isVerticalNavMini,
   }

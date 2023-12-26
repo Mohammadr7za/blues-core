@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url'
 export default defineNuxtConfig({
   app: {
     head: {
-      titleTemplate: '%s - NuxtJS Admin Template',
-      title: 'Vuexy',
+      titleTemplate: '%s - پیشخوان خدمات',
+      title: 'صبا فولاد خلیج فارس',
 
       link: [{
         rel: 'icon',
@@ -129,5 +129,11 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
 
+  server: {
+    port: 8080,
+  },
+  devServer: {
+    port: 8000
+  },
   modules: ['@vueuse/nuxt', '@nuxtjs/device', '@pinia/nuxt'],
 })

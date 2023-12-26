@@ -3,15 +3,16 @@ import { AppContentLayoutNav, ContentWidth, FooterType, HorizontalNavType, Navba
 
 export const layoutConfig = {
   app: {
-    title: 'my-layout',
+    title: 'خاص',
     logo: h('img', { src: '/src/assets/logo.svg' }),
     contentWidth: ContentWidth.Boxed,
     contentLayoutNav: AppContentLayoutNav.Vertical,
     overlayNavFromBreakpoint: breakpointsVuetify.md,
 
-    // isRTL: false,
+    isRTL: true,
+    version: process.env.VERSION,
     i18n: {
-      enable: true,
+      enable: false,
     },
     iconRenderer: h('div'),
   },

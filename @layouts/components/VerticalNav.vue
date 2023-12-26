@@ -1,15 +1,11 @@
 <script setup>
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import { VNodeRenderer } from './VNodeRenderer'
-import { layoutConfig } from '@layouts'
-import {
-  VerticalNavGroup,
-  VerticalNavLink,
-  VerticalNavSectionTitle,
-} from '@layouts/components'
-import { useLayoutConfigStore } from '@layouts/stores/config'
-import { injectionKeyIsVerticalNavHovered } from '@layouts/symbols'
-
+import {PerfectScrollbar} from 'vue3-perfect-scrollbar'
+import {VNodeRenderer} from './VNodeRenderer'
+import {layoutConfig} from '@layouts'
+import {VerticalNavGroup, VerticalNavLink, VerticalNavSectionTitle,} from '@layouts/components'
+import {useLayoutConfigStore} from '@layouts/stores/config'
+import {injectionKeyIsVerticalNavHovered} from '@layouts/symbols'
+import logo from 'assets/images/logo.svg'
 const props = defineProps({
   tag: {
     type: null,
@@ -79,14 +75,23 @@ const hideTitleAndIcon = configStore.isVerticalNavMini(isHovered)
       },
     ]"
   >
+
     <!-- 👉 Header -->
     <div class="nav-header">
+
       <slot name="nav-header">
         <NuxtLink
           to="/"
           class="app-logo app-title-wrapper"
         >
-          <VNodeRenderer :nodes="layoutConfig.app.logo" />
+          <VImg
+            :src="logo"
+            height="100%"
+            width="35"
+            class="me-3"
+          />
+          <!--          <img :src="the.app.logo"/>-->
+          <!--            <VNodeRenderer-->
 
           <Transition name="vertical-nav-app-title">
             <h1
